@@ -1,0 +1,17 @@
+module QBT
+{
+    /** NOTE: Have made recipe easier for now during testing
+        TODO: Add this, but must create item to teach recipe first NeedToBeLearn:true,
+        TODO: set OnGiveXP to significant electrical XP **/
+    recipe Build Base Teleporter {
+         keep [Recipe.GetItemTypes.Screwdriver],
+         Base.MetalBar 2,
+         Base.SheetMetal 6,
+         Radio.ElectricWire = 4,
+         Result: Moveables.baseteleporters_tileset_01_0,
+         Time:500.0,
+         SkillRequired:Electricity=8,
+         CanBeDoneFromFloor:false,
+         Category:Electrical,
+    }
+}

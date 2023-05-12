@@ -1,0 +1,10 @@
+module QBT {
+    item BaseTeleporter
+    {
+        Type         = Moveable,
+        DisplayName  = Base Teleporter,
+        Icon         = BaseTeleporter,
+        DisplayCategory = Electronics,
+        WorldObjectSprite = baseteleporters_tileset_01_0
+    }
+}
