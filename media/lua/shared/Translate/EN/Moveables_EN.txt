@@ -1,0 +1,4 @@
+Moveables_En = {
+	Base_Teleporter = "Base Teleporter",
+        BaseTeleporter = "Base Teleporter"
+}

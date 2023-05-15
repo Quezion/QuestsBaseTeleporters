@@ -1,0 +1,12 @@
+version = 0
+settings
+{
+    packFileName = baseteleporters_tileset.pack
+    outputImageSize = 512,512
+    scale50 = false
+    inputImageDirectory
+    {
+        path = ../../../../../TileZed/Tiles/2X
+        imagesAreTilesheets = true
+    }
+}

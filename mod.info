@@ -3,3 +3,5 @@ poster=poster.png
 id=QuestBaseTeleporters
 description=Adds constructable teleporters with right-click teleportation between them
 url=https://theindiestone.com/forums/
+pack=baseteleporters_tileset
+tiledef=baseteleporterstiledefs 3849
