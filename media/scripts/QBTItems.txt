@@ -1,6 +1,7 @@
 module QBT {
     /** Commented out -- turns out that PowerBank is an artifact of older releases of ISA
                          so you don't actually need to define this
+                         modern ISA uses a Moveable object with a particular sprite
     item BaseTeleporter
     {
         Type         = Moveable,

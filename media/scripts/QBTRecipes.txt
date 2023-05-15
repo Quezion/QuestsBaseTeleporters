@@ -12,6 +12,6 @@ module QBT
          SkillRequired:Electricity=8;MetalWelding=3,
          CanBeDoneFromFloor:false,
          Category:Electrical,
-         Result: Moveables.baseteleporters_tileset_01_0,
+         Result: Moveables.solarmod_tileset_01_0,
     }
 }
