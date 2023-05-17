@@ -18,7 +18,7 @@ function TpSystem:new()
 end
 
 function TpSystem:isValidIsoObject(isoObject)
-   return instanceof(isoObject, "IsoThumpable") and isoObject:getTextureName() == "solarmod_tileset_01_0"
+   return instanceof(isoObject, "IsoThumpable") and isoObject:getTextureName() == "baseteleporters_tileset_01_0"
 end
 
 function TpSystem:checkTeleporters()

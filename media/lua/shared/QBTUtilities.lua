@@ -1,7 +1,7 @@
 local util = {}
 
 util.Types = {
-   solarmod_tileset_01_0 = "BaseTeleporter",
+   baseteleporters_tileset_01_0 = "BaseTeleporter",
 }
 
 function util.getType(isoObject)

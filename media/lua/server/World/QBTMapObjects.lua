@@ -8,7 +8,7 @@ local function LoadBaseTeleporter(isoObject)
       qbt.TpSystem_server:loadIsoObject(isoObject)
    end
 end
-MapObjects.OnLoadWithSprite("solarmod_tileset_01_0", LoadBaseTeleporter, 5)
+MapObjects.OnLoadWithSprite("baseteleporters_tileset_01_0", LoadBaseTeleporter, 5)
 
 -- local function LoadPowerbank(isoObject)
 --    isoObject:getContainer():setAcceptItemFunction("AcceptItemFunction.ISA_Batteries")
@@ -19,7 +19,7 @@ MapObjects.OnLoadWithSprite("solarmod_tileset_01_0", LoadBaseTeleporter, 5)
 --       qbt.TpSystem_server:loadIsoObject(isoObject)
 --    end
 -- end
--- MapObjects.OnLoadWithSprite("solarmod_tileset_01_0", LoadPowerbank, 5)
+-- MapObjects.OnLoadWithSprite("baseteleporters_tileset_01_0", LoadPowerbank, 5)
 
 if not isClient then
     --- if a map had our objects
