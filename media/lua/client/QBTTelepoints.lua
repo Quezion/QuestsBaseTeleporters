@@ -27,10 +27,10 @@ end
 
 
 function Telepoints.MoveTo( player, id )
-   --print("=======================> Moving player '" .. tostring(player) .. "' to point '" .. id .. "'");
+   print("=======================> Moving player '" .. tostring(player) .. "' to point '" .. id .. "'");
    -- commented out, don't think this is necessary now that we're
    -- correctly passing the player object from the teleporter callbacks
-   player = qbt:getSpecificPlayer(player);
+   player = getSpecificPlayer(player);
    print("=======================> Moving player '" .. tostring(player) .. "' to point '" .. id .. "'");
    local lastPos = {
       X = player:getX(),
@@ -85,14 +85,14 @@ function Telepoints.Return( player )
    Telepoints._returnPoint.Last = nil;
 end
 
-Telepoints.AddPoint("IGUI_Louisville", 12697, 2347);
-Telepoints.AddPoint("IGUI_Rosewood",8093,11658);
-Telepoints.AddPoint("IGUI_WestPoint",11927,6886);
+Telepoints.AddPoint("Louisville", 12697, 2347);
+Telepoints.AddPoint("Rosewood",8093,11658);
+Telepoints.AddPoint("WestPoint",11927,6886);
 
-Telepoints.AddPoint("IGUI_Muldraugh", 10604, 9934);
+Telepoints.AddPoint("Muldraugh", 10604, 9934);
 
-Telepoints.AddPoint("IGUI_Riverside", 6538, 5309);
+Telepoints.AddPoint("Riverside", 6538, 5309);
 
-Telepoints.AddPoint("IGUI_MarchRidge", 10009, 12706);
+Telepoints.AddPoint("MarchRidge", 10009, 12706);
 
 qbt.Telepoints = Telepoints

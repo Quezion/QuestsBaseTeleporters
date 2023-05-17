@@ -14,13 +14,14 @@ function UI.OnPreFillWorldObjectContextMenu(player, context, worldobjects, test)
    end
 end
 
-function UI.teleportCallback(player,square)
-   print "UI.teleporterCallback invoked"
-   qbt.Telepoints.MoveTo(player,"IGUI_Riverside")
+function UI.teleportCallback(player,square,pointId)
+   print("UI.teleportCallback invoked with pointId = " .. pointId)
+   -- print "UI.teleporterCallback invoked"
+   qbt.Telepoints.MoveTo(player,pointId)
 end
 
 function UI.setNameCallback(player,square)
-   print "UI.setNameCallback invoked"
+   print("UI.setNameCallback invoked")
 end
 
 function UI.OnFillWorldObjectContextMenu(player, context, worldobjects, test)
@@ -37,21 +38,22 @@ function UI.OnFillWorldObjectContextMenu(player, context, worldobjects, test)
    end
 
    if teleporter then
-      print "entered teleporter callback"
       _teleporter = nil
       local square = teleporter:getSquare()
 
       -- TODO: something about below block is failing, figure out what
       if test then return ISWorldObjectContextMenu.setTest() end
-      local QBTSubMenu = context:getNew(context)
-      context:addSubMenu(context:addOption("Base Teleporters"), QBTSubMenu)
-      if test then return ISWorldObjectContextMenu.setTest() end
-      QBTSubMenu:addOption("Teleport To", player, UI.teleportCallback, square)
-      QBTSubMenu:addOption("Set Name", player, UI.setNameCallback, square)
-
-      --local name = teleporter:getModData()["name"]
-   else
-      print "no teleporter found, skipping callback"
+      -- Create static option to Set Name on the teleporter under cursor
+      context:addOption("Set Name", player, UI.setNameCallback, square)
+      -- Add Teleport To SubMenu and populate with teleportable points
+      local QBTTelepointsSubMenu = context:getNew(context)
+      context:addSubMenu(context:addOption("Teleport to"), QBTTelepointsSubMenu)
+      local availablePoints = Telepoints.GetAvailablePoints()
+      for _, pointName in pairs(availablePoints) do
+         QBTTelepointsSubMenu:addOption(pointName, player, UI.teleportCallback, square, pointName)
+         --print("pointName " .. tostring(pointName))
+      end
+      -- local name = teleporter:getModData()["name"]
    end
 end
 
