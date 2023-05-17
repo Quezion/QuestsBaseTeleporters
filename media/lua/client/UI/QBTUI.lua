@@ -16,6 +16,7 @@ end
 
 function UI.teleportCallback(player,square)
    print "UI.teleporterCallback invoked"
+   qbt.Telepoints.MoveTo(player,"IGUI_Riverside")
 end
 
 function UI.setNameCallback(player,square)
