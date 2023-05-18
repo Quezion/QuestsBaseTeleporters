@@ -3,7 +3,7 @@
 if isClient() then return end
 
 require "Map/SGlobalObject"
--- local qbt = require "QBTUtilities"
+local qbt = require "QBTUtilities"
 
 local SBaseteleporter = SGlobalObject:derive("SBaseteleporter")
 
@@ -13,6 +13,9 @@ end
 
 function SBaseteleporter:initNew()
    self.on = false
+   self.name = "New Teleporter"
+   -- qbt.randomString(12)
+   self.id = getRandomUUID()
    print "SBaseteleporter:initNew() called"
 end
 
@@ -31,10 +34,16 @@ end
 
 function SBaseteleporter:fromModData(modData)
    self.on = modData.on
+   self.name = modData.name
+   self.id = modData.id
+   print("SBaseteleporter:fromModData " .. self.id .. ", " .. self.name)
 end
 
 function SBaseteleporter:toModData(modData)
    modData.on = self.on
+   modData.name = self.name
+   modData.id = self.id
+   print("SBaseteleporter:toModData " .. modData.id .. ", " .. modData.name)
 end
 
 function SBaseteleporter:saveData(transmit)

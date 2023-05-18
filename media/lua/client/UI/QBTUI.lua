@@ -20,9 +20,32 @@ function UI.teleportCallback(player,square,pointId)
    qbt.Telepoints.MoveTo(player,pointId)
 end
 
-function UI.setNameCallback(player,square)
+function UI.setNameCallback(player,teleporter)
+   local oldName = teleporter:getName()
+   if oldName == nil then oldName = "" end
    print("UI.setNameCallback invoked")
+   local modal = ISTextBox:new(0, 0, 280, 180, "Set Teleporter Name", oldName, nil, UI.setNameClick, player, teleporter)
+   modal:initialise()
+   modal:addToUIManager()
 end
+
+function UI.setNameClick(_textbox, button, teleporter)
+   print("UI.setNameClick called")
+   if button.internal == "OK" then
+      if button.parent.entry:getText() and button.parent.entry:getText() ~= "" then
+         --print("setNameClick callback with captured name = " .. button.parent.entry:getText())
+         local oldName = teleporter:getName()
+         local newName = button.parent.entry:getText()
+         local square = teleporter:getSquare()
+         if oldName then
+            qbt.Telepoints.Remove(oldName)
+         end
+         teleporter:setName(newName)
+         qbt.Telepoints.Add(newName, square:getX(), square:getY(), square:getZ())
+      end
+   end
+end
+
 
 function UI.OnFillWorldObjectContextMenu(player, context, worldobjects, test)
    print "UI.OnFillWorldObjectContextMenu invoked"
@@ -44,7 +67,7 @@ function UI.OnFillWorldObjectContextMenu(player, context, worldobjects, test)
       -- TODO: something about below block is failing, figure out what
       if test then return ISWorldObjectContextMenu.setTest() end
       -- Create static option to Set Name on the teleporter under cursor
-      context:addOption("Set Name", player, UI.setNameCallback, square)
+      context:addOption("Set Name", player, UI.setNameCallback, teleporter)
       -- Add Teleport To SubMenu and populate with teleportable points
       local QBTTelepointsSubMenu = context:getNew(context)
       context:addSubMenu(context:addOption("Teleport to"), QBTTelepointsSubMenu)

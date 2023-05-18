@@ -9,7 +9,7 @@ local transporter = {
 
 }
 
-function Telepoints.AddPoint( id, x, y, z )
+function Telepoints.Add(id, x, y, z )
    if not id then
       error("There was no ID given", 2 );
    end
@@ -21,6 +21,16 @@ function Telepoints.AddPoint( id, x, y, z )
       Y = y,
       Z = z or 0
    }
+end
+
+function Telepoints.Remove(id)
+   if not id then
+      error("There was no ID given", 2 );
+   end
+   if type(id) ~= "string" then
+      error("The given ID is not a string", 2 );
+   end
+   Telepoints._regPoints[id] = nil
 end
 
 -- TODO: Telepoints.RemovePoint(id)
@@ -85,14 +95,12 @@ function Telepoints.Return( player )
    Telepoints._returnPoint.Last = nil;
 end
 
-Telepoints.AddPoint("Louisville", 12697, 2347);
-Telepoints.AddPoint("Rosewood",8093,11658);
-Telepoints.AddPoint("WestPoint",11927,6886);
-
-Telepoints.AddPoint("Muldraugh", 10604, 9934);
-
-Telepoints.AddPoint("Riverside", 6538, 5309);
-
-Telepoints.AddPoint("MarchRidge", 10009, 12706);
+-- Builtin In-Game Points
+-- Telepoints.Add("Louisville", 12697, 2347);
+-- Telepoints.Add("Rosewood",8093,11658);
+-- Telepoints.Add("WestPoint",11927,6886);
+-- Telepoints.Add("Muldraugh", 10604, 9934);
+-- Telepoints.Add("Riverside", 6538, 5309);
+-- Telepoints.Add("MarchRidge", 10009, 12706);
 
 qbt.Telepoints = Telepoints
