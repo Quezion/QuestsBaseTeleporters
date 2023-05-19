@@ -6,6 +6,9 @@ local isClient = isClient()
 local function LoadBaseTeleporter(isoObject)
    if not isClient then
       qbt.TpSystem_server:loadIsoObject(isoObject)
+   else
+      print "Clientside LoadBaseTeleporter invoked with isoObject"
+      -- qbt.Telepoints.Add(isoObject:getName(), isoObject:getX(), isoObject:getY(), isoObject:getZ())
    end
 end
 MapObjects.OnLoadWithSprite("baseteleporters_tileset_01_0", LoadBaseTeleporter, 5)

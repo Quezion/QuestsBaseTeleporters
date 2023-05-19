@@ -14,14 +14,20 @@ end
 function SBaseteleporter:initNew()
    self.on = false
    self.name = "New Teleporter"
-   -- qbt.randomString(12)
-   self.id = getRandomUUID()
-   print "SBaseteleporter:initNew() called"
+   self.id = tostring(getRandomUUID())
 end
 
 --called from loadIsoObject function when making new globalObject & luaObject, triggered by: Events.OnObjectAdded, MapObjects.OnLoadWithSprite
 function SBaseteleporter:stateFromIsoObject(isoObject)
    self:initNew()
+   -- Disabled, unknown exactly how the loading system works
+   -- and this custom code might be causing errors rather than fixing them
+   -- if isoObject then
+   --    local modData = isoObject:getModData()
+   --    if modData then
+   --       self:fromModData(modData)
+   --    end
+   -- end
    self:saveData(true)
 end
 
@@ -36,14 +42,14 @@ function SBaseteleporter:fromModData(modData)
    self.on = modData.on
    self.name = modData.name
    self.id = modData.id
-   print("SBaseteleporter:fromModData " .. self.id .. ", " .. self.name)
+   --print("SBaseteleporter:fromModData " .. self.id .. ", " .. self.name)
 end
 
 function SBaseteleporter:toModData(modData)
    modData.on = self.on
    modData.name = self.name
    modData.id = self.id
-   print("SBaseteleporter:toModData " .. modData.id .. ", " .. modData.name)
+   --print("SBaseteleporter:toModData " .. modData.id .. ", " .. modData.name)
 end
 
 function SBaseteleporter:saveData(transmit)

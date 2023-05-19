@@ -17,6 +17,8 @@ function TpSystem:new()
    return o
 end
 
+-- TODO: share this in Utilities instead of copying to client
+--       need to use special lua new() magic for 'multi inheritance' per ISA
 function TpSystem:isValidIsoObject(isoObject)
    return instanceof(isoObject, "IsoThumpable") and isoObject:getTextureName() == "baseteleporters_tileset_01_0"
 end

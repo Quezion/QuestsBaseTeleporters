@@ -2,12 +2,7 @@ local qbt = require "QBTUtilities"
 
 Telepoints = {
    _regPoints = {},
-   _returnPoint = {}
 };
-
-local transporter = {
-
-}
 
 function Telepoints.Add(id, x, y, z )
    if not id then
@@ -36,11 +31,9 @@ end
 -- TODO: Telepoints.RemovePoint(id)
 
 
-function Telepoints.MoveTo( player, id )
-   print("=======================> Moving player '" .. tostring(player) .. "' to point '" .. id .. "'");
-   -- commented out, don't think this is necessary now that we're
-   -- correctly passing the player object from the teleporter callbacks
-   player = getSpecificPlayer(player);
+function Telepoints.MoveTo( playerId, id )
+   print("=======================> Moving playerId '" .. tostring(playerId) .. "' to point '" .. id .. "'");
+   local player = getSpecificPlayer(playerId);
    print("=======================> Moving player '" .. tostring(player) .. "' to point '" .. id .. "'");
    local lastPos = {
       X = player:getX(),
@@ -55,7 +48,6 @@ function Telepoints.MoveTo( player, id )
    player:setLx( newPoint.X );
    player:setLy( newPoint.Y );
    player:setLz( newPoint.Z );
-   Telepoints._returnPoint.Last = lastPos;
 end
 
 function Telepoints.GetAvailablePoints()
@@ -73,26 +65,6 @@ function Telepoints.GetPoint( id )
       end
    end
    error("There is no point with ID of '" .. id .. "'", 2 );
-end
-
-function Telepoints.CanReturn()
-   if not Telepoints._returnPoint.Last then
-      return false;
-   else
-      return true;
-   end
-end
-
-function Telepoints.Return( player )
-   player = player.player;
-   local returnPoint = Telepoints._returnPoint.Last;
-   player:setX( returnPoint.X );
-   player:setY( returnPoint.Y );
-   player:setZ( returnPoint.Z );
-   player:setLx( returnPoint.X );
-   player:setLy( returnPoint.Y );
-   player:setLz( returnPoint.Z );
-   Telepoints._returnPoint.Last = nil;
 end
 
 -- Builtin In-Game Points
