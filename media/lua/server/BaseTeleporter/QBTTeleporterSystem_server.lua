@@ -24,11 +24,22 @@ function TpSystem:isValidIsoObject(isoObject)
 end
 
 function TpSystem:checkTeleporters()
-   print "TpSystem.checkTeleporters called"
+   local self = TpSystem.instance
+   local numTeleporters = self.system:getObjectCount()
+   self:noise(string.format("checkTeleporters running on %d teleporters", numTeleporters))
+   for i=0,numTeleporters - 1 do
+        local tp = self.system:getObjectByIndex(i):getModData()
+        local isotp = tp:getIsoObject()
+        local x = isotp:getX()
+        local y = isotp:getY()
+        local z = isotp:getZ()
+        self:noise(string.format("/telepoints: (%d) Teleporter %s at: %d, %d, %d",i,tp.id,x,y,z))
+        qbt.Telepoints.Add(tp.id,x,y,z)
+    end
 end
 
 --called in C/SGlobalObjectSystem:new(name)
-TpSystem.savedObjectModData = { 'on' }
+TpSystem.savedObjectModData = { 'on', 'name', 'id' }
 function TpSystem:initSystem()
    --set saved fields
    self.system:setObjectModDataKeys(self.savedObjectModData)
@@ -46,6 +57,8 @@ function TpSystem:OnObjectAdded(isoObject)
    if qbtType == "BaseTeleporter" and self:isValidIsoObject(isoObject) then
       print ("TpSystem OnObjectAdded BaseTeleporter")
       self:loadIsoObject(isoObject)
+      local modData = isoObject:getModData()
+      isoObject:transmitModData()
    end
 end
 
@@ -58,10 +71,6 @@ function TpSystem:OnObjectAboutToBeRemoved(isoObject)
       local luaObject = self:getLuaObjectOnSquare(isoObject:getSquare())
       if not luaObject then return end
       self:removeLuaObject(luaObject)
-      -- Commented out below, it's some separate process spaghetti
-      -- that allows for special logic on item add/remove
-      -- might need to enable this at some point, but delaying that evil
-      -- self.processRemoveObj:addItem(isoObject)
    end
 end
 
@@ -71,9 +80,6 @@ function TpSystem:OnClientCommand(command, playerObj, args)
       command(playerObj, args)
    end
 end
-
--- TODO: possible to use a custom .processRemoveObj function here
---       to maintain a table of all Teleporters
 
 SGlobalObjectSystem.RegisterSystemClass(TpSystem)
 

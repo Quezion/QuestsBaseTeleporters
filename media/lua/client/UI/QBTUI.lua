@@ -41,7 +41,8 @@ function UI.setNameClick(_textbox, button, teleporter)
             qbt.Telepoints.Remove(oldName)
          end
          teleporter:setName(newName)
-         qbt.Telepoints.Add(newName, square:getX(), square:getY(), square:getZ())
+         -- Disabled for now, trying to do this in EveryTenMinutes QBTTeleporterSystem_client sync
+         --qbt.Telepoints.Add(newName, square:getX(), square:getY(), square:getZ())
       end
    end
 end

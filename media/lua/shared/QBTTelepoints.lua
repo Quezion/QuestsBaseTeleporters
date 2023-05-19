@@ -1,6 +1,6 @@
 local qbt = require "QBTUtilities"
 
-Telepoints = {
+local Telepoints = {
    _regPoints = {},
 };
 
@@ -28,18 +28,10 @@ function Telepoints.Remove(id)
    Telepoints._regPoints[id] = nil
 end
 
--- TODO: Telepoints.RemovePoint(id)
-
-
 function Telepoints.MoveTo( playerId, id )
-   print("=======================> Moving playerId '" .. tostring(playerId) .. "' to point '" .. id .. "'");
+   print("=====> Moving playerId '" .. tostring(playerId) .. "' to point '" .. id .. "'");
    local player = getSpecificPlayer(playerId);
-   print("=======================> Moving player '" .. tostring(player) .. "' to point '" .. id .. "'");
-   local lastPos = {
-      X = player:getX(),
-      Y = player:getY(),
-      Z = player:getZ()
-   }
+   print("=====> Moving player '" .. tostring(player) .. "' to point '" .. id .. "'");
    local newPoint = Telepoints.GetPoint( id );
 
    player:setX( newPoint.X );
