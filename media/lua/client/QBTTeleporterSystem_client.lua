@@ -33,6 +33,13 @@ function TpSystem:newLuaObjectAt(x, y, z)
    return luaObject
 end
 
+function TpSystem:receiveServerCommand(name, args)
+   local command = self.Commands[command]
+   if command ~= nil then
+      command(args)
+   end
+end
+
 function TpSystem:isValidIsoObject(isoObject)
    return instanceof(isoObject, "IsoThumpable") and isoObject:getTextureName() == "baseteleporters_tileset_01_0"
 end
