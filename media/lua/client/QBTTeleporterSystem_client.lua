@@ -25,7 +25,11 @@ function TpSystem:newLuaObjectAt(x, y, z)
    self:noise("adding luaObject "..x..','..y..','..z)
    local globalObject = self.system:newObject(x, y, z)
    local luaObject = self:newLuaObject(globalObject)
-   --qbt.Telepoints.Add(,x,y,z) -- can't run here because modData might not have been received
+   -- local luaObjectId = luaObject.id
+   -- if luaObjectId then
+   --    self:noise("Lua Object ID = " .. luaObjectId)
+   -- end
+   --qbt.Telepoints.Add(,x,y,z) -- can't run here because modData might not have been received?
    return luaObject
 end
 
@@ -42,7 +46,7 @@ function TpSystem.updateTeleportersForClient()
       if isotp then
          tp:fromModData(isotp:getModData())
          if tp.id then
-            qbt.Telepoints.Add(tp.id,isotp:getX(),isotp:getY(),isotp:getZ())
+            qbt.Telepoints.Add(tp.id,tp.name,isotp:getX(),isotp:getY(),isotp:getZ())
          end
       end
    end

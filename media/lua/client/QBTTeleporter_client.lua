@@ -8,9 +8,9 @@ function CTeleporter:new(luaSystem, globalObject)
 end
 
 function CTeleporter:fromModData(modData)
-   self.on = modData["on"]
    self.id = modData["id"]
    self.name = modData["name"]
+   self.on = modData["on"]
 end
 
 return CTeleporter

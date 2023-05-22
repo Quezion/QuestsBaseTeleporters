@@ -23,19 +23,20 @@ function TpSystem:isValidIsoObject(isoObject)
    return instanceof(isoObject, "IsoThumpable") and isoObject:getTextureName() == "baseteleporters_tileset_01_0"
 end
 
-function TpSystem:checkTeleporters()
+function TpSystem:updateTeleporters()
    local self = TpSystem.instance
-   local numTeleporters = self.system:getObjectCount()
-   self:noise(string.format("checkTeleporters running on %d teleporters", numTeleporters))
-   for i=0,numTeleporters - 1 do
-        local tp = self.system:getObjectByIndex(i):getModData()
-        local isotp = tp:getIsoObject()
-        local x = isotp:getX()
-        local y = isotp:getY()
-        local z = isotp:getZ()
-        self:noise(string.format("/telepoints: (%d) Teleporter %s at: %d, %d, %d",i,tp.id,x,y,z))
-        qbt.Telepoints.Add(tp.id,x,y,z)
-    end
+   if self then
+      local numTeleporters = self.system:getObjectCount()
+      self:noise(string.format("checkTeleporters running on %d teleporters", numTeleporters))
+      for i=0,numTeleporters - 1 do
+         local teleporter = self.system:getObjectByIndex(i):getModData()
+         local isoTeleporter = teleporter:getIsoObject()
+         local x,y,z = isoTeleporter:getX(), isoTeleporter:getY(), isoTeleporter:getZ()
+         self:noise(string.format("/telepoints[%d]: Adding %s %s at: %d, %d, %d",
+                                  i,teleporter.id,teleporter.name,x,y,z))
+         qbt.Telepoints.Add(teleporter.id,teleporter.name,x,y,z)
+      end
+   end
 end
 
 --called in C/SGlobalObjectSystem:new(name)
@@ -43,11 +44,13 @@ TpSystem.savedObjectModData = { 'on', 'name', 'id' }
 function TpSystem:initSystem()
    --set saved fields
    self.system:setObjectModDataKeys(self.savedObjectModData)
-   Events.EveryHours.Add(TpSystem.checkTeleporters)
+   Events.EveryHours.Add(TpSystem.updateTeleporters)
 end
 
 function TpSystem:newLuaObject(globalObject)
-   return BaseTeleporter:new(self, globalObject)
+   local teleporter = BaseTeleporter:new(self, globalObject)
+   -- qbt.Telepoints.Add(modData.id, x, y, z)
+   return teleporter
 end
 
 ---triggered by: Events.OnObjectAdded (SGlobalObjectSystem)
@@ -59,6 +62,9 @@ function TpSystem:OnObjectAdded(isoObject)
       self:loadIsoObject(isoObject)
       local modData = isoObject:getModData()
       isoObject:transmitModData()
+      -- TODO: not sure if below actually works?
+      -- local x,y,z = isoObject:getX(), isoObject:getY(), isoObject:getZ()
+      -- qbt.Telepoints.Add(modData.id, x, y, z)
    end
 end
 
@@ -68,6 +74,10 @@ function TpSystem:OnObjectAboutToBeRemoved(isoObject)
    local qbtType = qbt.getType(isoObject)
    if not qbtType then return end
    if qbtType == "BaseTeleporter" and self:isValidIsoObject(isoObject) then
+      local modData = isoObject:getModData()
+      if modData then
+         qbt.Telepoints.Remove(modData.id)
+      end
       local luaObject = self:getLuaObjectOnSquare(isoObject:getSquare())
       if not luaObject then return end
       self:removeLuaObject(luaObject)

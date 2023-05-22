@@ -21,35 +21,40 @@ function UI.teleportCallback(player,square,pointId)
 end
 
 function UI.setNameCallback(player,teleporter)
-   local oldName = teleporter:getName()
-   if oldName == nil then oldName = "" end
    print("UI.setNameCallback invoked")
-   local modal = ISTextBox:new(0, 0, 280, 180, "Set Teleporter Name", oldName, nil, UI.setNameClick, player, teleporter)
+   local modal = ISTextBox:new(0, 0, 280, 180, "Set Teleporter Name", "", nil, UI.setNameClick, player, teleporter)
    modal:initialise()
    modal:addToUIManager()
 end
 
 function UI.setNameClick(_textbox, button, teleporter)
-   print("UI.setNameClick called")
+   local modData = teleporter:getModData()
+   local pointId = modData["id"]
+   if not pointId then return end -- guard against modData not yet being synchronized
+
+   -- print("UI.setNameClick called")
    if button.internal == "OK" then
-      if button.parent.entry:getText() and button.parent.entry:getText() ~= "" then
-         --print("setNameClick callback with captured name = " .. button.parent.entry:getText())
-         local oldName = teleporter:getName()
-         local newName = button.parent.entry:getText()
+      local newName = button.parent.entry:getText()
+      if newName and newName ~= "" then
+         -- print("setNameClick callback with captured name = " .. button.parent.entry:getText())
          local square = teleporter:getSquare()
          if oldName then
-            qbt.Telepoints.Remove(oldName)
+            qbt.Telepoints.Remove(pointId)
          end
-         teleporter:setName(newName)
-         -- Disabled for now, trying to do this in EveryTenMinutes QBTTeleporterSystem_client sync
-         --qbt.Telepoints.Add(newName, square:getX(), square:getY(), square:getZ())
+         modData["name"] = newName
+         teleporter:transmitModData()
+         print("/telepoints: Adding " .. tostring(newName) .. " with ID " .. pointId)
+         -- self:noise(string.format("/telepoints: Adding %s %s at: %d, %d, %d",
+         --                          pointId,newName,x,y,z))
+         qbt.Telepoints.Add(pointId, newName, square:getX(), square:getY(), square:getZ())
+
+         -- PbSystem.instance:sendCommand(self.character,"setName", { pb = { x = pb.x, y = pb.y, z = pb.z }, name = newName })
       end
    end
 end
 
 
 function UI.OnFillWorldObjectContextMenu(player, context, worldobjects, test)
-   print "UI.OnFillWorldObjectContextMenu invoked"
    if test and ISWorldObjectContextMenu.Test then return true end
    local teleporter = _teleporter
 
@@ -65,16 +70,15 @@ function UI.OnFillWorldObjectContextMenu(player, context, worldobjects, test)
       _teleporter = nil
       local square = teleporter:getSquare()
 
-      -- TODO: something about below block is failing, figure out what
       if test then return ISWorldObjectContextMenu.setTest() end
       -- Create static option to Set Name on the teleporter under cursor
       context:addOption("Set Name", player, UI.setNameCallback, teleporter)
       -- Add Teleport To SubMenu and populate with teleportable points
       local QBTTelepointsSubMenu = context:getNew(context)
       context:addSubMenu(context:addOption("Teleport to"), QBTTelepointsSubMenu)
-      local availablePoints = Telepoints.GetAvailablePoints()
-      for _, pointName in pairs(availablePoints) do
-         QBTTelepointsSubMenu:addOption(pointName, player, UI.teleportCallback, square, pointName)
+      local availablePoints = qbt.Telepoints.GetAvailablePoints()
+      for _, point in pairs(availablePoints) do
+         QBTTelepointsSubMenu:addOption(point.Name, player, UI.teleportCallback, square, point.Id)
          --print("pointName " .. tostring(pointName))
       end
       -- local name = teleporter:getModData()["name"]
