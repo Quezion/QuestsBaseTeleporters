@@ -27,23 +27,18 @@ function TpSystem:updateTeleporters()
    local self = TpSystem.instance
    if self then
       local numTeleporters = self.system:getObjectCount()
-      self:noise(string.format("checkTeleporters running on %d teleporters", numTeleporters))
+      self:noise(string.format("updateTeleporters running on %d teleporters", numTeleporters))
       for i=0,numTeleporters - 1 do
          local teleporter = self.system:getObjectByIndex(i):getModData()
-         local isoTeleporter = teleporter:getIsoObject()
-         -- Added below guard because of runtime crash -- does server offload iso objects sometimes?
-         if isoTeleporter then
-            local x,y,z = isoTeleporter:getX(), isoTeleporter:getY(), isoTeleporter:getZ()
-            self:noise(string.format("/telepoints[%d]: Adding %s %s at: %d, %d, %d",
-                                     i,teleporter.id,teleporter.name,x,y,z))
-            qbt.Telepoints.Add(teleporter.id,teleporter.name,x,y,z)
-         end
+         self:noise(string.format("/telepoints[%d]: Adding %s %s at: %d, %d, %d",
+                                  i,teleporter.id,teleporter.name,teleporter.x,teleporter.y,teleporter.z))
+         qbt.Telepoints.Add(teleporter.id,teleporter.name,teleporter.x,teleporter.y,teleporter.z)
       end
    end
 end
 
 --called in C/SGlobalObjectSystem:new(name)
-TpSystem.savedObjectModData = { 'on', 'name', 'id' }
+TpSystem.savedObjectModData = { 'on', 'name', 'id', 'x', 'y', 'x' }
 function TpSystem:initSystem()
    --set saved fields
    self.system:setObjectModDataKeys(self.savedObjectModData)

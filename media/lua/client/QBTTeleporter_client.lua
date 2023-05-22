@@ -11,6 +11,9 @@ function CTeleporter:fromModData(modData)
    self.id = modData["id"]
    self.name = modData["name"]
    self.on = modData["on"]
+   self.x = modData["x"]
+   self.y = modData["y"]
+   self.z = modData["z"]
 end
 
 return CTeleporter

@@ -40,16 +40,24 @@ end
 --Client variation of the server "updateTeleporters", might run before new data is received
 function TpSystem.updateTeleportersForClient()
    self:noise("TpSystem.updateTeleportersForClient(), luaObjectCount == "..TpSystem.instance:getLuaObjectCount())
-   for i=1,TpSystem.instance:getLuaObjectCount() do
-      local tp = TpSystem.instance:getLuaObjectByIndex(i)
-      local isotp = tp:getIsoObject()
-      if isotp then
-         tp:fromModData(isotp:getModData())
-         if tp.id then
-            qbt.Telepoints.Add(tp.id,tp.name,isotp:getX(),isotp:getY(),isotp:getZ())
-         end
-      end
+   local numTeleporters = TpSystem.instance:getObjectCount()
+   self:noise(string.format("updateTeleportersForClient running on %d teleporters", numTeleporters))
+   for i=0,numTeleporters - 1 do
+      local teleporter = TpSystem.instance.system:getObjectByIndex(i):getModData()
+      self:noise(string.format("/telepoints[%d]: Adding %s %s at: %d, %d, %d",
+                               i,teleporter.id,teleporter.name,teleporter.x,teleporter.y,teleporter.z))
+      qbt.Telepoints.Add(teleporter.id,teleporter.name,teleporter.x,teleporter.y,teleporter.z)
    end
+   -- for i=1,TpSystem.instance:getLuaObjectCount() do
+   --    local tp = TpSystem.instance:getLuaObjectByIndex(i)
+   --    local isotp = tp:getIsoObject()
+   --    if isotp then
+   --       tp:fromModData(isotp:getModData())
+   --       if tp.id then
+   --          qbt.Telepoints.Add(tp.id,tp.name,isotp:getX(),isotp:getY(),isotp:getZ())
+   --       end
+   --    end
+   -- end
 end
 
 CGlobalObjectSystem.RegisterSystemClass(TpSystem)
