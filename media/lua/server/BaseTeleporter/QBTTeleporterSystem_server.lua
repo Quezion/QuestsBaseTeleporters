@@ -31,10 +31,13 @@ function TpSystem:updateTeleporters()
       for i=0,numTeleporters - 1 do
          local teleporter = self.system:getObjectByIndex(i):getModData()
          local isoTeleporter = teleporter:getIsoObject()
-         local x,y,z = isoTeleporter:getX(), isoTeleporter:getY(), isoTeleporter:getZ()
-         self:noise(string.format("/telepoints[%d]: Adding %s %s at: %d, %d, %d",
-                                  i,teleporter.id,teleporter.name,x,y,z))
-         qbt.Telepoints.Add(teleporter.id,teleporter.name,x,y,z)
+         -- Added below guard because of runtime crash -- does server offload iso objects sometimes?
+         if isoTeleporter then
+            local x,y,z = isoTeleporter:getX(), isoTeleporter:getY(), isoTeleporter:getZ()
+            self:noise(string.format("/telepoints[%d]: Adding %s %s at: %d, %d, %d",
+                                     i,teleporter.id,teleporter.name,x,y,z))
+            qbt.Telepoints.Add(teleporter.id,teleporter.name,x,y,z)
+         end
       end
    end
 end

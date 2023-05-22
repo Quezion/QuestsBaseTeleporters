@@ -1,6 +1,6 @@
 if isClient() then return end
 
-local TpSystem = require "QBTBaseTeleporterSystem_server"
+local TpSystem = require "BaseTeleporter/QBTTeleporterSystem_server"
 
 local Commands = {}
 
@@ -13,7 +13,7 @@ end
 -- TODO: run this command from the Client and see if it works
 --       copy however ISA is doing this
 function Commands.setName(player,args)
-   local tp = getTeleporter(args.tp)
+   local tp = getTeleporter(args.teleporter)
    if tp then
       tp.name = args.name
       tp:saveData(true)

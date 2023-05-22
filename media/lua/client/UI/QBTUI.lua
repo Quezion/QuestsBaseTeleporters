@@ -1,6 +1,7 @@
 local string, math, getText = string, math, getText
 
 local qbt = require "QBTUtilities"
+local TpSystem = require "QBTTeleporterSystem_client"
 
 local UI = {}
 
@@ -22,12 +23,12 @@ end
 
 function UI.setNameCallback(player,teleporter)
    print("UI.setNameCallback invoked")
-   local modal = ISTextBox:new(0, 0, 280, 180, "Set Teleporter Name", "", nil, UI.setNameClick, player, teleporter)
+   local modal = ISTextBox:new(0, 0, 280, 180, "Set Teleporter Name", "", nil, UI.setNameClick, player, player, teleporter)
    modal:initialise()
    modal:addToUIManager()
 end
 
-function UI.setNameClick(_textbox, button, teleporter)
+function UI.setNameClick(_textbox, button, player, teleporter)
    local modData = teleporter:getModData()
    local pointId = modData["id"]
    if not pointId then return end -- guard against modData not yet being synchronized
@@ -41,14 +42,20 @@ function UI.setNameClick(_textbox, button, teleporter)
          if oldName then
             qbt.Telepoints.Remove(pointId)
          end
-         modData["name"] = newName
-         teleporter:transmitModData()
+         -- modData["name"] = newName
          print("/telepoints: Adding " .. tostring(newName) .. " with ID " .. pointId)
          -- self:noise(string.format("/telepoints: Adding %s %s at: %d, %d, %d",
          --                          pointId,newName,x,y,z))
-         qbt.Telepoints.Add(pointId, newName, square:getX(), square:getY(), square:getZ())
+         local x = square:getX()
+         local y = square:getY()
+         local z = square:getZ()
+         qbt.Telepoints.Add(pointId, newName, x, y, z);
 
-         -- PbSystem.instance:sendCommand(self.character,"setName", { pb = { x = pb.x, y = pb.y, z = pb.z }, name = newName })
+         print("testing whether this shows up as valid X value = " .. tostring(x))
+         TpSystem.instance:sendCommand(getSpecificPlayer(player),
+                                       "setName",
+                                       { teleporter = { x=x,y=y,z=z },
+                                         name = newName })
       end
    end
 end
