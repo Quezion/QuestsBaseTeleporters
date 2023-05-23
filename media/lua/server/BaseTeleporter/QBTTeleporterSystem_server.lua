@@ -1,5 +1,5 @@
 --[[
-"qbt_teleporter" server system, registers new teleporters
+   "qbt_teleporter" server system, registers new teleporters
 --]]
 
 if isClient() then return end
@@ -28,11 +28,15 @@ function TpSystem:updateTeleporters()
    if self then
       local numTeleporters = self.system:getObjectCount()
       self:noise(string.format("updateTeleporters running on %d teleporters", numTeleporters))
+      -- TODO: implement 'registerTeleporters' and only send single command
       for i=0,numTeleporters - 1 do
          local teleporter = self.system:getObjectByIndex(i):getModData()
-         self:noise(string.format("/telepoints[%d]: Adding %s %s at: %d, %d, %d",
+         self:noise(string.format("/updateTeleporters[%d]: Adding %s %s at: %d, %d, %d",
                                   i,teleporter.id,teleporter.name,teleporter.x,teleporter.y,teleporter.z))
-         qbt.Telepoints.Add(teleporter.id,teleporter.name,teleporter.x,teleporter.y,teleporter.z)
+         -- Send command to all players to register given teleporter
+         self:sendCommand("registerTeleporter",
+                          {id = teleporter.id, name = teleporter.name,
+                           x = teleporter.x, y=teleporter.y, z=teleporter.z})
       end
    end
 end

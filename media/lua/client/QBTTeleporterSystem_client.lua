@@ -11,9 +11,9 @@ function TpSystem:new()
 end
 
 function TpSystem:initSystem()
-   if isClient() then
-      Events.EveryTenMinutes.Add(TpSystem.updateTeleportersForClient)
-   end
+   -- if isClient() then
+   --    Events.EveryTenMinutes.Add(TpSystem.updateTeleportersForClient)
+   -- end
 end
 
 function TpSystem:newLuaObject(globalObject)
@@ -33,10 +33,13 @@ function TpSystem:newLuaObjectAt(x, y, z)
    return luaObject
 end
 
-function TpSystem:receiveServerCommand(name, args)
-   local command = self.Commands[command]
+function TpSystem:OnServerCommand(name, args)
+   local command = self.Commands[name]
+   print("QBTTeleporterSystem_client received server command = " .. tostring(name))
    if command ~= nil then
       command(args)
+   else
+      print("QBTTeleporterSystem_client couldn't find matching command to run")
    end
 end
 
@@ -44,7 +47,7 @@ function TpSystem:isValidIsoObject(isoObject)
    return instanceof(isoObject, "IsoThumpable") and isoObject:getTextureName() == "baseteleporters_tileset_01_0"
 end
 
---Client variation of the server "updateTeleporters", might run before new data is received
+-- Client variation of the server "updateTeleporters", might run before new data is received
 function TpSystem.updateTeleportersForClient()
    print("qbt.TpSystem.updateTeleportersForClient() called")
    local numTeleporters = TpSystem.instance:getLuaObjectCount()

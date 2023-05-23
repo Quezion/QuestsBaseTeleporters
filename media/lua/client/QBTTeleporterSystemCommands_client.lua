@@ -1,5 +1,3 @@
-if not isClient() then return end
-
 local qbt = require "QBTUtilities"
 local TpSystem = require "QBTTeleporterSystem_client"
 
