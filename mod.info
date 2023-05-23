@@ -1,7 +1,7 @@
 name=Quest's Base Teleporters
 poster=poster.png
 id=QuestsBaseTeleporters
-description=Adds buildable teleporters with right-click teleportation between them
+description=Buildable teleporters with instantaneous travel between them
 url=https://theindiestone.com/forums/
 pack=baseteleporters_tileset
 tiledef=baseteleporterstiledefs 3849
