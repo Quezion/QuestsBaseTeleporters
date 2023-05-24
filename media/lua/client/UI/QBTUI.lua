@@ -8,21 +8,18 @@ local UI = {}
 local _teleporter -- dynamically set to right-clicked teleporter on contextmenu prefill
 
 function UI.OnPreFillWorldObjectContextMenu(player, context, worldobjects, test)
-   if generator then
-      -- TODO: enable below finding logic, but need to port find type functions
-      --_powerbank = qbt.WorldUtil.findTypeOnSquare(generator:getSquare(),"BaseTeleporter")
-      if _teleporter then generator = nil end
-   end
+   -- if generator then
+   --    -- TODO: enable below finding logic? but need to port find type functions
+   --    _teleporter = qbt.WorldUtil.findTypeOnSquare(generator:getSquare(),"BaseTeleporter")
+   --    if _teleporter then generator = nil end
+   -- end
 end
 
 function UI.teleportCallback(player,square,pointId)
-   print("UI.teleportCallback invoked with pointId = " .. pointId)
-   -- print "UI.teleporterCallback invoked"
    qbt.Telepoints.MoveTo(player,pointId)
 end
 
 function UI.setNameCallback(player,teleporter)
-   print("UI.setNameCallback invoked")
    local modal = ISTextBox:new(0, 0, 280, 180, "Set Teleporter Name", "", nil, UI.setNameClick, player, player, teleporter)
    modal:initialise()
    modal:addToUIManager()
@@ -33,7 +30,6 @@ function UI.setNameClick(_textbox, button, player, teleporter)
    local pointId = modData["id"]
    if not pointId then return end -- guard against modData not yet being synchronized
 
-   -- print("UI.setNameClick called")
    if button.internal == "OK" then
       local newName = button.parent.entry:getText()
       if newName and newName ~= "" then
@@ -42,16 +38,12 @@ function UI.setNameClick(_textbox, button, player, teleporter)
          if oldName then
             qbt.Telepoints.Remove(pointId)
          end
-         -- modData["name"] = newName
          print("/telepoints: Adding " .. tostring(newName) .. " with ID " .. pointId)
-         -- self:noise(string.format("/telepoints: Adding %s %s at: %d, %d, %d",
-         --                          pointId,newName,x,y,z))
          local x = square:getX()
          local y = square:getY()
          local z = square:getZ()
          qbt.Telepoints.Add(pointId, newName, x, y, z);
 
-         print("testing whether this shows up as valid X value = " .. tostring(x))
          TpSystem.instance:sendCommand(getSpecificPlayer(player),
                                        "setName",
                                        { teleporter = { x=x,y=y,z=z },
@@ -86,9 +78,7 @@ function UI.OnFillWorldObjectContextMenu(player, context, worldobjects, test)
       local availablePoints = qbt.Telepoints.GetAvailablePoints()
       for _, point in pairs(availablePoints) do
          QBTTelepointsSubMenu:addOption(point.Name, player, UI.teleportCallback, square, point.Id)
-         --print("pointName " .. tostring(pointName))
       end
-      -- local name = teleporter:getModData()["name"]
    end
 end
 

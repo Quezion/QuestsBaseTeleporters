@@ -23,7 +23,7 @@ end
 --called from loadIsoObject function when making new globalObject & luaObject, triggered by: Events.OnObjectAdded, MapObjects.OnLoadWithSprite
 function SBaseteleporter:stateFromIsoObject(isoObject)
    self:initNew(isoObject:getX(), isoObject:getY(), isoObject:getZ())
-   self:noise("stateFromIsoObject invoked")
+   -- self:noise("stateFromIsoObject invoked")
    self:saveData(true)
 end
 

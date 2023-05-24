@@ -28,7 +28,6 @@ function TpSystem:updateTeleporters()
    if self then
       local numTeleporters = self.system:getObjectCount()
       self:noise(string.format("updateTeleporters running on %d teleporters", numTeleporters))
-      -- TODO: implement 'registerTeleporters' and only send single command
       for i=0,numTeleporters - 1 do
          local teleporter = self.system:getObjectByIndex(i):getModData()
          self:noise(string.format("/updateTeleporters[%d]: Adding %s %s at: %d, %d, %d",
@@ -51,7 +50,6 @@ end
 
 function TpSystem:newLuaObject(globalObject)
    local teleporter = BaseTeleporter:new(self, globalObject)
-   -- qbt.Telepoints.Add(modData.id, x, y, z)
    return teleporter
 end
 
@@ -60,18 +58,13 @@ function TpSystem:OnObjectAdded(isoObject)
    local qbtType = qbt.getType(isoObject)
    if not qbtType then return end
    if qbtType == "BaseTeleporter" and self:isValidIsoObject(isoObject) then
-      print ("TpSystem OnObjectAdded BaseTeleporter")
       self:loadIsoObject(isoObject)
       local modData = isoObject:getModData()
       isoObject:transmitModData()
-      -- TODO: not sure if below actually works?
-      -- local x,y,z = isoObject:getX(), isoObject:getY(), isoObject:getZ()
-      -- qbt.Telepoints.Add(modData.id, x, y, z)
    end
 end
 
 ---triggered by: Events.OnObjectAboutToBeRemoved, Events.OnDestroyIsoThumpable  (SGlobalObjectSystem)
----v41.78 object data has already been copied to InventoryItem on pickup
 function TpSystem:OnObjectAboutToBeRemoved(isoObject)
    local qbtType = qbt.getType(isoObject)
    if not qbtType then return end

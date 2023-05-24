@@ -64,12 +64,4 @@ function Telepoints.GetPoint( id )
    error("There is no point with ID of '" .. id .. "'", 2 );
 end
 
--- Builtin Game Points
--- Telepoints.Add("1","Louisville", 12697, 2347);
--- Telepoints.Add("2","Rosewood",8093,11658);
--- Telepoints.Add("3","WestPoint",11927,6886);
--- Telepoints.Add("4","Muldraugh", 10604, 9934);
--- Telepoints.Add("5","Riverside", 6538, 5309);
--- Telepoints.Add("6","MarchRidge", 10009, 12706);
-
 qbt.Telepoints = Telepoints

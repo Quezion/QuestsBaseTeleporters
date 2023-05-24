@@ -9,7 +9,8 @@ Current Early Access. Implementation is inefficient and needs testing. Breakages
 - [ ] Write script to "release a new version of the mod"
   - [ ] Increment mod.info version
   - [ ] Compile only modfiles into Workshop directory structure (`modname/Contents/mods/QuestBaseTeleporters/*`)
-  - [ ] Copy directory into `~/ProjectZomboid/Workshop/`
+  - [ ] Copy directory into `~/Zomboid/Workshop/`
+- [ ] Find & script running a Lua linter on this repo
 - [ ] Batch hourly server -> client command of registerTeleporter into registerTeleporters
 - [ ] Synchronize teleporter list in real-time
 - [ ] Require electricity for Teleporters to work

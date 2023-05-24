@@ -13,9 +13,8 @@ function util.objIsType(isoObject,modType)
    return Worldutil.Types[isoObject:getTextureName()] == modType
 end
 
--- NOTE: seems to cause crash on game initialization
--- math.randomseed(os.time())
-
+-- NOTE: trying to run math.randomseed() seems to cause a Lua crash
+--       we assume the generator is already seeded by PZ code somewhere else
 local charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 
 function util.randomString(length)
@@ -27,13 +26,5 @@ function util.randomString(length)
    end
    return res
 end
-
--- function util.randomString(length)
---    if length > 0 then
---       return string.random(length - 1) .. charset:sub(math.random(1, #charset), 1)
---    else
---       return ""
---    end
--- end
 
 return util
