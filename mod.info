@@ -1,8 +1,8 @@
 name=Quest's Base Teleporters
 poster=poster.png
 id=QuestsBaseTeleporters
-description=Buildable teleporters with instantaneous travel between them
-url=https://theindiestone.com/forums/
+description=Buildable teleporters with instantaneous travel between them. Early access & still being tested
+url=https://github.com/Quezion/QuestsBaseTeleporters
 pack=baseteleporters_tileset
 tiledef=baseteleporterstiledefs 3849
 author=Quest
