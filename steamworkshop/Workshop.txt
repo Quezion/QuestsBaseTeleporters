@@ -1,0 +1,11 @@
+version=1
+id=2979721745
+title=Quest's Base Teleporters
+description=Adds buildable Teleporters with instant travel between them
+description=EARLY ACCESS, works locally but needs optimization, polish, & community testing
+description=Teleporters currently require Electrical & Metalworking to build. The recipe is always known.
+description=All clients will receive an updated teleporter list on every hour at :00
+description=
+description=see https://github.com/Quezion/QuestsBaseTeleporters
+tags=Build 41;Building;Multiplayer;Silly/Fun
+visibility=public

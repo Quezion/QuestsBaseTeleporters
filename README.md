@@ -5,11 +5,17 @@ Teleporters can be built with Electrical + Metalworking. They're disassemblable 
 
 Current Early Access. Implementation is inefficient and needs testing. Breakages across versions could occur but we'll try to avoid this. Will become more stable as it receives more testing & polish.
 
+## Build
+
+Install & run [Bababshka](https://babashka.org/) with `bb build.clj`. This combines the `steamworkshop` & `src` directories to produce a working version for Steam.
+
 ## TODOs
 - [ ] Write script to "release a new version of the mod"
-  - [ ] Increment mod.info version
-  - [ ] Compile only modfiles into Workshop directory structure (`modname/Contents/mods/QuestBaseTeleporters/*`)
-  - [ ] Copy directory into `~/Zomboid/Workshop/`
+  - [x] Compile only modfiles into Workshop directory structure (`modname/Contents/mods/QuestBaseTeleporters/*`
+  - [x] Copy `steamworkshop` to `build/` and rename to QuestBaseTeleporters
+  - [x] Copy modfiles to `build/QuestBaseTeleporters/Contents/mods/QuestBaseTeleporters`
+  - [ ] Copy `target/QuestBaseTeleporters` directory into `~/Zomboid/Workshop/`
+  - [ ] ~~Increment mod.info version~~ Watch mod.info in Release task & copy updated file back to this repo
 - [ ] Find & script running a Lua linter on this repo
 - [ ] Batch hourly server -> client command of registerTeleporter into registerTeleporters
 - [ ] Synchronize teleporter list in real-time
@@ -37,7 +43,7 @@ Current Early Access. Implementation is inefficient and needs testing. Breakages
 * [PZWiki.net - New Tiles](https://pzwiki.net/wiki/New_Tiles)
 
 ## Contributors
-* [Poltergeist](https://github.com/Poltergeistzx), maintainer of [Immersive Solar Arrays](https://github.com/Poltergeistzx/ImmersiveSolarArrays)\
+* [Poltergeist](https://github.com/Poltergeistzx) & [radx5Blue](https://github.com/radx5Blue) authors of [Immersive Solar Arrays](https://github.com/Poltergeistzx/ImmersiveSolarArrays)\
   Vital code & reference on using game's GlobalObjectSystem to track runtime teleporters, lua mod architecture, & more
 * [NayTec](https://steamcommunity.com/profiles/76561198031286597) & [Naia](https://steamcommunity.com/profiles/76561198133217288), authors of the [Bus Ticket mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2866535182)\
   Code & reference on recording teleportable points + moving players
