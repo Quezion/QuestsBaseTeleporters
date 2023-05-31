@@ -13,16 +13,16 @@ In order to Lint codefiles, you should also install [luacheck](https://github.co
 
 * `bb build` to copy modfiles in Steam workshop format at `build/`\
   This combines `steamworkshop` & `src` directories to produce a version for Steam.
-* `bb release` to copy the modfiles into your `~/Zomboid/Workshop` directory.
+* `bb release` to copy `build/` modfiles into your `~/Zomboid/Workshop` directory.
 * `bb tasks` for a list of available tasks
 * `bb taskname --help` for task information & supported args
 
 ## TODOs
-- [ ] Write script to "release a new version of the mod"
+- [x] Write script to "release a new version of the mod"
   - [x] Compile only modfiles into Workshop directory structure (`modname/Contents/mods/QuestBaseTeleporters/*`
   - [x] Copy `steamworkshop` to `build/` and rename to QuestBaseTeleporters
   - [x] Copy modfiles to `build/QuestBaseTeleporters/Contents/mods/QuestBaseTeleporters`
-  - [ ] Copy `target/QuestBaseTeleporters` directory into `~/Zomboid/Workshop/`
+  - [x] Copy `target/QuestBaseTeleporters` directory into `~/Zomboid/Workshop/`
   - [ ] ~~Increment mod.info version~~ Watch mod.info in Release task & copy updated file back to this repo
 - [x] Find & script running a Lua linter on this repo
   - [ ] Work through Lua warnings and add global namespaces to `script/lint.clj`

@@ -9,13 +9,12 @@ function util.getType(isoObject)
    return util.Types[isoObject:getTextureName()]
 end
 
-function util.objIsType(isoObject,modType)
-   return Worldutil.Types[isoObject:getTextureName()] == modType
-end
+-- function util.objIsType(isoObject,modType)
+--    return util.Types[isoObject:getTextureName()] == modType
+-- end
 
 -- NOTE: trying to run math.randomseed() seems to cause a Lua crash
 --       we assume the generator is already seeded by PZ code somewhere else
-local charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 
 function util.randomString(length)
    local res = ""
