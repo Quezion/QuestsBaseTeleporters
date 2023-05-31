@@ -14,7 +14,7 @@
 (defn release!
   [{:keys [target
            zomboid-workshop
-           qbt-workshop] :as cli-opts}]
+           qbt-workshop]}]
   (assert (fs/exists? zomboid-workshop) "Zomboid Workshop directory exists")
   (fs/delete-tree qbt-workshop)
   (fs/create-dir qbt-workshop)
@@ -23,7 +23,7 @@
 
 (defn help []
   (println "Babashka script to release QuestsBaseTeleporters.")
-  (->> (dissoc cli-options :workdir)
+  (->> (dissoc (cli-options) :workdir)
        (shared/cli-options->tablemaps)
        (pprint/print-table))
   (println ""))
