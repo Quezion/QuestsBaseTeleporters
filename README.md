@@ -9,7 +9,7 @@ Current Early Access. Implementation is inefficient and needs testing. Breakages
 
 Ensure [Bababshka](https://babashka.org/) is installed & on the system path via `bb`
 
-In order to Lint codefiles, you should also install [luacheck](https://github.com/mpeterv/luacheck) & place it on your path.
+In order to Lint codefiles, you should also install [luacheck](https://github.com/mpeterv/luacheck) & place it on your PATH.
 
 * `bb build` to copy modfiles in Steam workshop format at `build/`\
   This combines `steamworkshop` & `src` directories to produce a version for Steam.
@@ -24,7 +24,8 @@ In order to Lint codefiles, you should also install [luacheck](https://github.co
   - [x] Copy modfiles to `build/QuestBaseTeleporters/Contents/mods/QuestBaseTeleporters`
   - [ ] Copy `target/QuestBaseTeleporters` directory into `~/Zomboid/Workshop/`
   - [ ] ~~Increment mod.info version~~ Watch mod.info in Release task & copy updated file back to this repo
-- [ ] Find & script running a Lua linter on this repo
+- [x] Find & script running a Lua linter on this repo
+  - [ ] Work through Lua warnings and add global namespaces to `script/lint.clj`
 - [ ] Batch hourly server -> client command of registerTeleporter into registerTeleporters
 - [ ] Synchronize teleporter list in real-time
 - [ ] Require electricity for Teleporters to work
