@@ -9,12 +9,13 @@ Current Early Access. Implementation is inefficient and needs testing. Breakages
 
 Ensure [Bababshka](https://babashka.org/) is installed & on the system path via `bb`
 
-* `bb build` to copy modfiles in Steam workshop format at `build/`.
+In order to Lint codefiles, you should also install [luacheck](https://github.com/mpeterv/luacheck) & place it on your path.
+
+* `bb build` to copy modfiles in Steam workshop format at `build/`\
+  This combines `steamworkshop` & `src` directories to produce a version for Steam.
 * `bb release` to copy the modfiles into your `~/Zomboid/Workshop` directory.
 * `bb tasks` for a list of available tasks
 * `bb taskname --help` for task information & supported args
-
-This combines the `steamworkshop` & `src` directories to produce a working version for Steam.
 
 ## TODOs
 - [ ] Write script to "release a new version of the mod"

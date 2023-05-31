@@ -4,6 +4,7 @@
             [clean :refer [clean!]]
             [clojure.pprint :as pprint]
             [clojure.string :as str]
+            [lint :refer [lint!]]
             [shared :as shared]))
 
 (def cli-options (let [{:keys [workdir] :as opts} (shared/cli-options)]
@@ -13,14 +14,17 @@
 
 (defn build!
   [{:keys [src steam-workshop target workdir] :as cli-opts}]
-  (println "===> Beginning script/build of QuestsBaseTeleporters...")
+  (println "===> Beginning script/build of QuestsBaseTeleporters <===")
   (println "Working directory is" (str workdir))
   (clean! {:target target})
+  (lint! {:target (str workdir "/src")})
+  (println "")
   (println "Building library... [src steamworkshop target]")
   (prn [src steam-workshop target])
   (fs/create-dir target)
   (fs/copy-tree steam-workshop target {:replace-existing true})
-  (fs/copy-tree src (str target "/Contents/mods/QuestsBaseTeleporters")))
+  (fs/copy-tree src (str target "/Contents/mods/QuestsBaseTeleporters"))
+  (println "===> Build complete <==="))
 
 (defn help []
   (println "Builds QuestsBaseTeleporters. Supported options:")
