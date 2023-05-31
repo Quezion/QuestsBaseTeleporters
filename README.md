@@ -5,9 +5,16 @@ Teleporters can be built with Electrical + Metalworking. They're disassemblable 
 
 Current Early Access. Implementation is inefficient and needs testing. Breakages across versions could occur but we'll try to avoid this. Will become more stable as it receives more testing & polish.
 
-## Build
+## Development
 
-Install & run [Bababshka](https://babashka.org/) with `bb build.clj`. This combines the `steamworkshop` & `src` directories to produce a working version for Steam.
+Ensure [Bababshka](https://babashka.org/) is installed & on the system path via `bb`
+
+* `bb build` to copy modfiles in Steam workshop format at `build/`.
+* `bb release` to copy the modfiles into your `~/Zomboid/Workshop` directory.
+* `bb tasks` for a list of available tasks
+* `bb taskname --help` for task information & supported args
+
+This combines the `steamworkshop` & `src` directories to produce a working version for Steam.
 
 ## TODOs
 - [ ] Write script to "release a new version of the mod"

@@ -1,0 +1,12 @@
+{:paths ["script"]
+ :tasks {build {:doc "Builds mod to target directory"
+                :task build/-main}
+         clean {:doc "Cleans target directory"
+                :task clean/-main}
+         release {:doc "Copies built mod into Zomboid directory\nThen it can be released via in-game Workshop"
+                  :task release/-main}
+         help {:doc "Display help on using Babashka in this project"
+               :task (println "\nBabashka task runner for Quest's Base Teleporters\n"
+                              "----------------------------\n"
+                              "Use 'bb tasks' to list tasks\n"
+                              "or 'bb task --help' for info on a specific task\n")}}}
