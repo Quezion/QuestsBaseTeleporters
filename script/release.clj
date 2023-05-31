@@ -15,7 +15,6 @@
   [{:keys [target
            zomboid-workshop
            qbt-workshop] :as cli-opts}]
-  (prn target zomboid-workshop qbt-workshop)
   (assert (fs/exists? zomboid-workshop) "Zomboid Workshop directory exists")
   (fs/delete-tree qbt-workshop)
   (fs/create-dir qbt-workshop)
