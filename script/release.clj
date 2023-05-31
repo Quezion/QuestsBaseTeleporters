@@ -15,10 +15,13 @@
   [{:keys [target
            zomboid-workshop
            qbt-workshop]}]
+  (prn "Releasing built modfiles [target qbt-workshop]" [(str target) (str qbt-workshop)])
+  (assert (fs/exists? target) "Target build directory exists")
   (assert (fs/exists? zomboid-workshop) "Zomboid Workshop directory exists")
   (fs/delete-tree qbt-workshop)
   (fs/create-dir qbt-workshop)
   (fs/copy-tree target qbt-workshop)
+  (println "Modfiles released to " qbt-workshop)
   qbt-workshop)
 
 (defn help []
